@@ -16,25 +16,23 @@ interface ConfigField {
 }
 
 const CONFIG_FIELDS: ConfigField[] = [
-  // Файлы и папки
-  { key: 'CACHE_FILE_NAME', label: 'Имя файла кэша', description: 'Файл для кэширования данных ВК групп', defaultValue: 'vk_group_cache.json', type: 'text', group: 'files' },
-  { key: 'CHANNEL_PROTECTION_LIST_FILE_NAME', label: 'Файл защищенных каналов', description: 'JSON файл со списком защищенных каналов', defaultValue: 'protected_channels.json', type: 'text', group: 'files' },
-  { key: 'DATABASE_FILE_NAME', label: 'Файл базы данных', description: 'SQLite база данных обработанных постов', defaultValue: 'processed_posts.db', type: 'text', group: 'files' },
+  // Файлы и папки - отсортировано по алфавиту
+  { key: 'CACHE_FILE_NAME', label: 'Кэш групп', description: 'Файл для кэширования данных ВК групп', defaultValue: 'vk_group_cache', type: 'text', group: 'files' },
+  { key: 'CHANNEL_PROTECTION_LIST_FILE_NAME', label: 'Защищенные каналы', description: 'Список защищенных каналов', defaultValue: 'protected_channels', type: 'text', group: 'files' },
   { key: 'DATA_FOLDER', label: 'Папка данных', description: 'Основная папка для хранения данных', defaultValue: 'data', type: 'text', group: 'files' },
-  { key: 'LOG_FILE_NAME', label: 'Файл логов', description: 'Файл для записи логов работы бота', defaultValue: 'bot.log', type: 'text', group: 'files' },
-  { key: 'LIVE_CACHE_FILE_NAME', label: 'Файл кэша стримов', description: 'Кэш для данных о прямых трансляциях', defaultValue: 'vk_Live_cache.json', type: 'text', group: 'files' },
-  { key: 'LIVE_DATABASE_FILE_NAME', label: 'База данных стримов', description: 'База данных для отслеживания стримов', defaultValue: 'vk_live.db', type: 'text', group: 'files' },
-  { key: 'STREAM_TOOLS_CONFIG_FILE_NAME', label: 'Конфигурация стрим-инструментов', description: 'Файл настроек для стрим инструментов', defaultValue: 'Apps.json', type: 'text', group: 'files' },
+  { key: 'DATABASE_FILE_NAME', label: 'База данных постов', description: 'База данных обработанных постов', defaultValue: 'processed_posts', type: 'text', group: 'files' },
+  { key: 'LIVE_CACHE_FILE_NAME', label: 'Кэш стримов', description: 'Кэш для данных о прямых трансляциях', defaultValue: 'vk_Live_cache', type: 'text', group: 'files' },
+  { key: 'LIVE_DATABASE_FILE_NAME', label: 'База данных стримов', description: 'База данных для отслеживания стримов', defaultValue: 'vk_live', type: 'text', group: 'files' },
+  { key: 'LOG_FILE_NAME', label: 'Файл логов', description: 'Файл для записи логов работы бота', defaultValue: 'bot', type: 'text', group: 'files' },
+  { key: 'STREAM_TOOLS_CONFIG_FILE_NAME', label: 'Конфигурация стрим-инструментов', description: 'Файл настроек для стрим инструментов', defaultValue: 'Apps', type: 'text', group: 'files' },
 
-  // Токены и ID
-  { key: 'DISCORD_BOT_TOKEN', label: 'Токен Discord бота', description: 'Токен для подключения к Discord API', defaultValue: 'MTQwNzMxNDgyMTA5MDY0NDA2OQ.GzPWsB.2X2xPnsCF7NIJosvpoeQEYqhBbRsanD1pcIwlY', type: 'text', group: 'tokens' },
-  { key: 'VK_TOKEN', label: 'Токен ВКонтакте', description: 'Токен для доступа к API ВКонтакте', defaultValue: 'vk1.a.2gPhBcAi-o0mVPmHTiBI34p6pUiHO28w4EkpP3xJmPmGUfgzqK1Mpj7yFUQ0EbKZM_ZEHnJcn1MdvIxsjp5LDl6lQW2RRFEbnZHmEydXFAASwYvU-gRWIr3XXksx8c3wgt7cPAYgebhaD6eb9umAWqDK2ebV2kjOdOMq0NZiGYy3-BnqzUwk_RLapi8psZjSon1HcvyS2AxY_yCcmYPU_Q', type: 'text', group: 'tokens' },
+  // ID каналов и ролей - отсортировано по алфавиту
   { key: 'EXTRA_STATUS_CHANNEL_ID', label: 'ID канала дополнительного статуса', description: 'Discord канал для дополнительных уведомлений', defaultValue: '1053619584558714880', type: 'number', group: 'tokens' },
   { key: 'GLOBAL_LOG_CHANNEL_ID', label: 'ID канала глобальных логов', description: 'Discord канал для записи всех логов', defaultValue: '1403729214255140955', type: 'text', group: 'tokens' },
   { key: 'RESTORE_ROLE_ID', label: 'ID роли восстановления', description: 'ID роли для восстановления доступа', defaultValue: '1412061713217359916', type: 'text', group: 'tokens' },
   { key: 'SERVER_ID', label: 'ID сервера Discord', description: 'Идентификатор Discord сервера', defaultValue: '835802952521351180', type: 'text', group: 'tokens' },
 
-  // Настройки отладки
+  // Настройки отладки - отсортировано по алфавиту
   { key: 'DEBUG', label: 'Режим отладки', description: 'Включить подробные логи для отладки', defaultValue: 'false', type: 'boolean', group: 'debug' },
   { key: 'DISABLE_EMOJI_CONSOLE', label: 'Отключить эмодзи в консоли', description: 'Убрать эмодзи из вывода в консоль', defaultValue: 'false', type: 'boolean', group: 'debug' },
   { key: 'DISABLE_EMOJI_DISCORD', label: 'Отключить эмодзи в Discord', description: 'Убрать эмодзи из сообщений Discord', defaultValue: 'false', type: 'boolean', group: 'debug' },
@@ -42,7 +40,7 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'DISABLE_KEYBOARD_INTERRUPT', label: 'Отключить прерывание с клавиатуры', description: 'Игнорировать Ctrl+C и подобные команды', defaultValue: 'true', type: 'boolean', group: 'debug' },
   { key: 'DISABLE_LOGGER', label: 'Отключить логгер', description: 'Полностью отключить систему логирования', defaultValue: 'false', type: 'boolean', group: 'debug' },
 
-  // Функциональность
+  // Функциональность - отсортировано по алфавиту
   { key: 'CUSTOM_MODIFICATIONS', label: 'Пользовательские модификации', description: 'Включить кастомные изменения функционала', defaultValue: 'false', type: 'boolean', group: 'features' },
   { key: 'ENABLE_DISCORD_CHANNEL_PROTECTION', label: 'Защита каналов Discord', description: 'Включить защиту определенных каналов', defaultValue: 'true', type: 'boolean', group: 'features' },
   { key: 'ENABLE_EXTRA_MODULE', label: 'Дополнительный модуль', description: 'Активировать расширенную функциональность', defaultValue: 'true', type: 'boolean', group: 'features' },
@@ -50,14 +48,10 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'ENABLE_POST_MONITORING', label: 'Мониторинг постов', description: 'Отслеживать новые посты в группах', defaultValue: 'true', type: 'boolean', group: 'features' },
   { key: 'ENABLE_STREAM_TOOLS', label: 'Инструменты стрима', description: 'Включить дополнительные инструменты для стримеров', defaultValue: 'false', type: 'boolean', group: 'features' },
 
-  // Настройки Discord
+  // Настройки Discord - только режим логирования
   { key: 'DISCORD_LOG_MODE', label: 'Режим логирования Discord', description: 'Уровень детализации логов (errors_only, all)', defaultValue: 'errors_only', type: 'text', group: 'discord' },
-  { key: 'INTENTS_MEMBERS', label: 'Намерения участников', description: 'Доступ к информации об участниках сервера', defaultValue: 'true', type: 'boolean', group: 'discord' },
-  { key: 'INTENTS_MESSAGE_CONTENT', label: 'Намерения содержимого сообщений', description: 'Доступ к чтению содержимого сообщений', defaultValue: 'true', type: 'boolean', group: 'discord' },
-  { key: 'INTENTS_PRESENCES', label: 'Намерения присутствия', description: 'Отслеживание статуса пользователей', defaultValue: 'true', type: 'boolean', group: 'discord' },
-  { key: 'INTENTS_VOICE_STATES', label: 'Намерения голосовых состояний', description: 'Отслеживание голосовых каналов', defaultValue: 'true', type: 'boolean', group: 'discord' },
 
-  // Прочие настройки
+  // Прочие настройки - отсортировано по алфавиту
   { key: 'JSON_ENSURE_ASCII', label: 'Принудительный ASCII в JSON', description: 'Кодировать все символы в ASCII при записи JSON', defaultValue: 'false', type: 'boolean', group: 'misc' },
   { key: 'JSON_INDENT', label: 'Отступ в JSON', description: 'Количество пробелов для форматирования JSON', defaultValue: '2', type: 'number', group: 'misc' },
   { key: 'LIVE_RETENTION_DAYS', label: 'Дни хранения данных стримов', description: 'Сколько дней хранить данные о стримах', defaultValue: '30', type: 'number', group: 'misc' },
@@ -71,7 +65,7 @@ const CONFIG_FIELDS: ConfigField[] = [
 
 const GROUP_NAMES = {
   files: 'Файлы и папки',
-  tokens: 'Токены и идентификаторы',
+  tokens: 'ID каналов и ролей',
   debug: 'Настройки отладки',
   features: 'Функциональность',
   discord: 'Настройки Discord',
@@ -97,15 +91,50 @@ export const ConfigForm = () => {
   };
 
   const generateConfigFile = () => {
-    const configContent = CONFIG_FIELDS
-      .map(field => `${field.key}="${formData[field.key]}"`)
-      .join('\n');
+    // Функция для добавления расширений к файлам
+    const addFileExtension = (key: string, value: string) => {
+      const fileExtensions: Record<string, string> = {
+        'CACHE_FILE_NAME': '.json',
+        'CHANNEL_PROTECTION_LIST_FILE_NAME': '.json',
+        'DATABASE_FILE_NAME': '.db',
+        'LOG_FILE_NAME': '.log',
+        'LIVE_CACHE_FILE_NAME': '.json',
+        'LIVE_DATABASE_FILE_NAME': '.db',
+        'STREAM_TOOLS_CONFIG_FILE_NAME': '.json'
+      };
+      
+      if (fileExtensions[key]) {
+        return value + fileExtensions[key];
+      }
+      return value;
+    };
+    
+    // Создаем массив всех параметров конфигурации
+    const allConfigEntries = [
+      // Добавляем токены с пустыми значениями
+      'DISCORD_BOT_TOKEN=""',
+      'VK_TOKEN=""',
+      // Добавляем Discord intents с фиксированными значениями true
+      'INTENTS_MEMBERS="true"',
+      'INTENTS_MESSAGE_CONTENT="true"',
+      'INTENTS_PRESENCES="true"',
+      'INTENTS_VOICE_STATES="true"',
+      // Добавляем остальные поля
+      ...CONFIG_FIELDS.map(field => {
+        const value = field.group === 'files' 
+          ? addFileExtension(field.key, formData[field.key])
+          : formData[field.key];
+        return `${field.key}="${value}"`;
+      })
+    ];
+    
+    const configContent = allConfigEntries.join('\n');
 
     const blob = new Blob([configContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'config.env';
+    a.download = '.env';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -113,7 +142,7 @@ export const ConfigForm = () => {
 
     toast({
       title: "Файл создан!",
-      description: "Конфигурационный файл успешно скачан.",
+      description: "Конфигурационный файл .env успешно скачан.",
     });
   };
 
