@@ -53,7 +53,6 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'JSON_INDENT', label: 'Отступ в JSON', description: 'Количество пробелов для форматирования JSON', defaultValue: '2', type: 'number', group: 'misc' },
   { key: 'LIVE_RETENTION_DAYS', label: 'Дни хранения данных стримов', description: 'Сколько дней хранить данные о стримах', defaultValue: '30', type: 'number', group: 'misc' },
   { key: 'LOG_FILE_ENCODING', label: 'Кодировка файла логов', description: 'Кодировка для записи логов', defaultValue: 'utf-8', type: 'text', group: 'misc' },
-  { key: 'LOG_USERNAME', label: 'Имя пользователя в логах', description: 'Отображаемое имя в системе логирования', defaultValue: 'VK-Бот-Логи', type: 'text', group: 'misc' },
   { key: 'RETENTION_DAYS', label: 'Дни хранения основных данных', description: 'Сколько дней хранить обработанные посты', defaultValue: '30', type: 'number', group: 'misc' },
   { key: 'TIMEZONE_REGION', label: 'Часовой пояс', description: 'Регион для определения времени', defaultValue: 'Europe/Moscow', type: 'text', group: 'misc' },
   { key: 'USE_GROUP_AVATAR_AS_DEFAULT', label: 'Аватар группы как основной', description: 'Использовать аватар ВК группы вместо стандартного', defaultValue: 'false', type: 'boolean', group: 'misc' },
@@ -243,7 +242,7 @@ export const ConfigForm = () => {
                         onChange={(e) => handleInputChange(field.key, e.target.value)}
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                       >
-                        <option value="all">Все</option>
+                        <option value="all">all</option>
                         <option value="errors_only">errors_only</option>
                         <option value="disabled">disabled</option>
                       </select>
