@@ -24,7 +24,6 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'LIVE_CACHE_FILE_NAME', label: 'Кэш стримов', description: 'Кэш для данных о прямых трансляциях', defaultValue: 'vk_Live_cache', type: 'text', group: 'files' },
   { key: 'LIVE_DATABASE_FILE_NAME', label: 'База данных стримов', description: 'База данных для отслеживания стримов', defaultValue: 'vk_live', type: 'text', group: 'files' },
   { key: 'LOG_FILE_NAME', label: 'Файл логов', description: 'Файл для записи логов работы бота', defaultValue: 'bot', type: 'text', group: 'files' },
-  { key: 'STREAM_TOOLS_CONFIG_FILE_NAME', label: 'Конфигурация стрим-инструментов', description: 'Файл настроек для стрим инструментов', defaultValue: 'Apps', type: 'text', group: 'files' },
 
   // ID каналов и ролей - отсортировано по алфавиту
   { key: 'EXTRA_STATUS_CHANNEL_ID', label: 'ID канала дополнительного статуса', description: 'Discord канал для дополнительных уведомлений', defaultValue: '1053619584558714880', type: 'number', group: 'tokens' },
@@ -41,15 +40,13 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'DISABLE_LOGGER', label: 'Отключить логгер', description: 'Полностью отключить систему логирования', defaultValue: 'false', type: 'boolean', group: 'debug' },
 
   // Функциональность - отсортировано по алфавиту
-  { key: 'CUSTOM_MODIFICATIONS', label: 'Пользовательские модификации', description: 'Включить кастомные изменения функционала', defaultValue: 'false', type: 'boolean', group: 'features' },
   { key: 'ENABLE_DISCORD_CHANNEL_PROTECTION', label: 'Защита каналов Discord', description: 'Включить защиту определенных каналов', defaultValue: 'true', type: 'boolean', group: 'features' },
   { key: 'ENABLE_EXTRA_MODULE', label: 'Дополнительный модуль', description: 'Активировать расширенную функциональность', defaultValue: 'true', type: 'boolean', group: 'features' },
   { key: 'ENABLE_LIVE_MONITORING', label: 'Мониторинг стримов', description: 'Отслеживать прямые трансляции', defaultValue: 'true', type: 'boolean', group: 'features' },
   { key: 'ENABLE_POST_MONITORING', label: 'Мониторинг постов', description: 'Отслеживать новые посты в группах', defaultValue: 'true', type: 'boolean', group: 'features' },
-  { key: 'ENABLE_STREAM_TOOLS', label: 'Инструменты стрима', description: 'Включить дополнительные инструменты для стримеров', defaultValue: 'false', type: 'boolean', group: 'features' },
 
   // Настройки Discord - только режим логирования
-  { key: 'DISCORD_LOG_MODE', label: 'Режим логирования Discord', description: 'Уровень детализации логов (errors_only, all)', defaultValue: 'errors_only', type: 'text', group: 'discord' },
+  { key: 'DISCORD_LOG_MODE', label: 'Режим логирования Discord', description: 'Уровень детализации логов', defaultValue: 'errors_only', type: 'text', group: 'discord' },
 
   // Прочие настройки - отсортировано по алфавиту
   { key: 'JSON_ENSURE_ASCII', label: 'Принудительный ASCII в JSON', description: 'Кодировать все символы в ASCII при записи JSON', defaultValue: 'false', type: 'boolean', group: 'misc' },
@@ -99,8 +96,7 @@ export const ConfigForm = () => {
         'DATABASE_FILE_NAME': '.db',
         'LOG_FILE_NAME': '.log',
         'LIVE_CACHE_FILE_NAME': '.json',
-        'LIVE_DATABASE_FILE_NAME': '.db',
-        'STREAM_TOOLS_CONFIG_FILE_NAME': '.json'
+        'LIVE_DATABASE_FILE_NAME': '.db'
       };
       
       if (fileExtensions[key]) {
@@ -218,7 +214,7 @@ export const ConfigForm = () => {
         {Object.entries(groupedFields).map(([groupKey, fields]) => (
           <Card key={groupKey}>
             <CardHeader>
-              <CardTitle className="text-xl">{GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}</CardTitle>
+              <CardTitle className="text-xl border-b-4 border-red-600 pb-2 inline-block">{GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}</CardTitle>
               <CardDescription>
                 Настройки для {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES].toLowerCase()}
               </CardDescription>
@@ -239,6 +235,17 @@ export const ConfigForm = () => {
                       >
                         <option value="true">Включено (true)</option>
                         <option value="false">Отключено (false)</option>
+                      </select>
+                    ) : field.key === 'DISCORD_LOG_MODE' ? (
+                      <select
+                        id={field.key}
+                        value={formData[field.key]}
+                        onChange={(e) => handleInputChange(field.key, e.target.value)}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      >
+                        <option value="all">Все</option>
+                        <option value="errors_only">errors_only</option>
+                        <option value="disabled">disabled</option>
                       </select>
                     ) : (
                       <Input
