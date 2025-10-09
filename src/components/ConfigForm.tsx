@@ -16,6 +16,16 @@ interface ConfigField {
   group: string;
 }
 
+// Дополнительные поля только для справочника (не редактируются в форме)
+const READONLY_FIELDS: ConfigField[] = [
+  { key: 'DISCORD_BOT_TOKEN', label: 'Токен Discord бота', description: 'Секретный токен для авторизации Discord бота. Получите его в Discord Developer Portal', defaultValue: '', type: 'text', group: 'tokens' },
+  { key: 'VK_TOKEN', label: 'Токен VK API', description: 'Токен доступа для работы с VK API. Получите его в настройках VK приложения', defaultValue: '', type: 'text', group: 'tokens' },
+  { key: 'INTENTS_MEMBERS', label: 'Intent: Members', description: 'Разрешить боту получать информацию о участниках сервера', defaultValue: 'true', type: 'boolean', group: 'discord' },
+  { key: 'INTENTS_MESSAGE_CONTENT', label: 'Intent: Message Content', description: 'Разрешить боту читать содержимое сообщений', defaultValue: 'true', type: 'boolean', group: 'discord' },
+  { key: 'INTENTS_PRESENCES', label: 'Intent: Presences', description: 'Разрешить боту видеть статусы активности пользователей', defaultValue: 'true', type: 'boolean', group: 'discord' },
+  { key: 'INTENTS_VOICE_STATES', label: 'Intent: Voice States', description: 'Разрешить боту отслеживать голосовые каналы', defaultValue: 'true', type: 'boolean', group: 'discord' },
+];
+
 const CONFIG_FIELDS: ConfigField[] = [
   // Файлы и папки - отсортировано по алфавиту
   { key: 'CACHE_FILE_NAME', label: 'Кэш групп', description: 'Файл для кэширования данных ВК групп', defaultValue: 'vk_group_cache', type: 'text', group: 'files' },
@@ -159,6 +169,15 @@ export const ConfigForm = () => {
   };
 
   const groupedFields = CONFIG_FIELDS.reduce((acc, field) => {
+    if (!acc[field.group]) {
+      acc[field.group] = [];
+    }
+    acc[field.group].push(field);
+    return acc;
+  }, {} as Record<string, ConfigField[]>);
+
+  // Объединяем все поля для справочника (редактируемые + readonly)
+  const allFieldsForReference = [...READONLY_FIELDS, ...CONFIG_FIELDS].reduce((acc, field) => {
     if (!acc[field.group]) {
       acc[field.group] = [];
     }
@@ -430,7 +449,7 @@ export const ConfigForm = () => {
             <CardContent>
               <ScrollArea className="h-[calc(100vh-300px)]">
                 <div className="space-y-6 pr-4">
-                  {Object.entries(groupedFields).map(([groupKey, fields]) => (
+                  {Object.entries(allFieldsForReference).map(([groupKey, fields]) => (
                     <div key={groupKey} className="space-y-3">
                       <h3 className="font-semibold text-sm text-primary border-b pb-1">
                         {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}
@@ -444,7 +463,7 @@ export const ConfigForm = () => {
                             <div className="text-muted-foreground leading-relaxed">
                               {field.description}
                             </div>
-                            <div className="text-muted-foreground/70 font-mono">
+                            <div className="font-mono text-primary font-semibold">
                               {field.key}
                             </div>
                           </div>
