@@ -26,6 +26,7 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'LOG_FILE_NAME', label: 'Файл логов', description: 'Файл для записи логов работы бота', defaultValue: 'bot', type: 'text', group: 'files' },
 
   // ID каналов и ролей - отсортировано по алфавиту
+  { key: 'EXTRA_IGNORE_ROLE_ID', label: 'ID роли игнорирования', description: 'ID роли для игнорирования в дополнительном модуле', defaultValue: '1425073025119944804', type: 'text', group: 'tokens' },
   { key: 'EXTRA_STATUS_CHANNEL_ID', label: 'ID канала дополнительного статуса', description: 'Discord канал для дополнительных уведомлений', defaultValue: '1053619584558714880', type: 'number', group: 'tokens' },
   { key: 'GLOBAL_LOG_CHANNEL_ID', label: 'ID канала глобальных логов', description: 'Discord канал для записи всех логов', defaultValue: '1403729214255140955', type: 'text', group: 'tokens' },
   { key: 'RESTORE_ROLE_ID', label: 'ID роли куратора', description: 'ID роли для восстановления доступа', defaultValue: '1412061713217359916', type: 'text', group: 'tokens' },
@@ -53,8 +54,10 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'JSON_INDENT', label: 'Отступ в JSON', description: 'Количество пробелов для форматирования JSON', defaultValue: '2', type: 'number', group: 'misc' },
   { key: 'LIVE_RETENTION_DAYS', label: 'Дни хранения данных стримов', description: 'Сколько дней хранить данные о стримах', defaultValue: '30', type: 'number', group: 'misc' },
   { key: 'LOG_FILE_ENCODING', label: 'Кодировка файла логов', description: 'Кодировка для записи логов', defaultValue: 'utf-8', type: 'text', group: 'misc' },
+  { key: 'MENTION_STARTUP_ROLE', label: 'Упоминать роль при запуске', description: 'Упоминать роль куратора при запуске бота', defaultValue: 'false', type: 'boolean', group: 'misc' },
   { key: 'RETENTION_DAYS', label: 'Дни хранения основных данных', description: 'Сколько дней хранить обработанные посты', defaultValue: '30', type: 'number', group: 'misc' },
   { key: 'TIMEZONE_REGION', label: 'Часовой пояс', description: 'Регион для определения времени', defaultValue: 'Europe/Moscow', type: 'text', group: 'misc' },
+  { key: 'USE_AUTO_RESTART', label: 'Автоматический перезапуск', description: 'Автоматически перезапускать бота при критических ошибках', defaultValue: 'true', type: 'boolean', group: 'misc' },
   { key: 'USE_GROUP_AVATAR_AS_DEFAULT', label: 'Аватар группы как основной', description: 'Использовать аватар ВК группы вместо стандартного', defaultValue: 'false', type: 'boolean', group: 'misc' },
   { key: 'USE_GROUP_COVER_AS_PREVIEW', label: 'Обложка группы как превью', description: 'Использовать обложку группы для предпросмотра', defaultValue: 'false', type: 'boolean', group: 'misc' },
 ];
