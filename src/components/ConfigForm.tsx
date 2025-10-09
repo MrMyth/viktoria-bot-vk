@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Users } from 'lucide-react';
+import { MessageCircle, Users, BookOpen } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface ConfigField {
   key: string;
@@ -166,7 +167,7 @@ export const ConfigForm = () => {
   }, {} as Record<string, ConfigField[]>);
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
+    <div className="container mx-auto p-6">
       {/* Header with Bot Name and Logos */}
       <div className="text-center space-y-6 mb-12">
         <div className="flex items-center justify-center gap-8 mb-6">
@@ -212,7 +213,9 @@ export const ConfigForm = () => {
         </Button>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Левая колонка - форма настроек */}
+        <div className="lg:col-span-2 space-y-6">
         {Object.entries(groupedFields).map(([groupKey, fields]) => (
           <Card key={groupKey}>
             <CardHeader>
@@ -404,12 +407,56 @@ export const ConfigForm = () => {
             </CardContent>
           </Card>
         ))}
-      </div>
+        
+        <div className="text-center pt-8">
+          <Button onClick={generateConfigFile} variant="download" size="lg">
+            Скачать готовый файл конфигурации
+          </Button>
+        </div>
+        </div>
 
-      <div className="text-center pt-8">
-        <Button onClick={generateConfigFile} variant="download" size="lg">
-          Скачать готовый файл конфигурации
-        </Button>
+        {/* Правая колонка - справочник по настройкам */}
+        <div className="lg:col-span-1">
+          <Card className="sticky top-6">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <BookOpen className="w-5 h-5" />
+                Справочник настроек
+              </CardTitle>
+              <CardDescription>
+                Полное описание всех параметров конфигурации
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[calc(100vh-300px)]">
+                <div className="space-y-6 pr-4">
+                  {Object.entries(groupedFields).map(([groupKey, fields]) => (
+                    <div key={groupKey} className="space-y-3">
+                      <h3 className="font-semibold text-sm text-primary border-b pb-1">
+                        {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}
+                      </h3>
+                      <div className="space-y-3">
+                        {fields.map((field) => (
+                          <div key={field.key} className="space-y-1 text-xs">
+                            <div className="font-medium text-foreground">
+                              {field.label}
+                            </div>
+                            <div className="text-muted-foreground leading-relaxed">
+                              {field.description}
+                            </div>
+                            <div className="text-muted-foreground/70 font-mono">
+                              {field.key}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
