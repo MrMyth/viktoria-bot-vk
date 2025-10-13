@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { MessageCircle, Users, BookOpen } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { z } from 'zod';
 
 interface ConfigField {
   key: string;
@@ -91,9 +92,37 @@ export const ConfigForm = () => {
     return initialData;
   });
 
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const { toast } = useToast();
 
+  const validateNumberField = (value: string): boolean => {
+    // Проверяем, что строка содержит только цифры
+    return /^\d+$/.test(value);
+  };
+
   const handleInputChange = (key: string, value: string) => {
+    const field = CONFIG_FIELDS.find(f => f.key === key);
+    
+    // Валидация для числовых полей
+    if (field?.type === 'number') {
+      if (value === '') {
+        setErrors(prev => ({ ...prev, [key]: '' }));
+        setFormData(prev => ({ ...prev, [key]: value }));
+        return;
+      }
+      
+      if (!validateNumberField(value)) {
+        setErrors(prev => ({ 
+          ...prev, 
+          [key]: 'Поле должно содержать только цифры' 
+        }));
+        return;
+      } else {
+        setErrors(prev => ({ ...prev, [key]: '' }));
+      }
+    }
+    
     setFormData(prev => ({
       ...prev,
       [key]: value
@@ -411,15 +440,23 @@ export const ConfigForm = () => {
                         </optgroup>
                       </select>
                     ) : (
-                      <Input
-                        id={field.key}
-                        type={field.type === 'number' ? 'number' : 'text'}
-                        value={formData[field.key]}
-                        onChange={(e) => handleInputChange(field.key, e.target.value)}
-                        placeholder={field.description}
-                      />
+                      <div className="space-y-1">
+                        <Input
+                          id={field.key}
+                          type={field.type === 'number' ? 'text' : 'text'}
+                          value={formData[field.key]}
+                          onChange={(e) => handleInputChange(field.key, e.target.value)}
+                          placeholder={field.description}
+                          className={errors[field.key] ? 'border-red-500' : ''}
+                        />
+                        {errors[field.key] && (
+                          <p className="text-xs text-red-500">{errors[field.key]}</p>
+                        )}
+                      </div>
                     )}
-                    <p className="text-xs text-muted-foreground">{field.description}</p>
+                    {!errors[field.key] && (
+                      <p className="text-xs text-muted-foreground">{field.description}</p>
+                    )}
                   </div>
                 ))}
               </div>
