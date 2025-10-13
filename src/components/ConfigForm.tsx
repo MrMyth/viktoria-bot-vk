@@ -436,7 +436,7 @@ export const ConfigForm = () => {
 
         {/* Правая колонка - справочник по настройкам */}
         <div className="lg:col-span-1">
-          <Card className="sticky top-6 h-[calc(100vh-3rem)]">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
@@ -446,33 +446,31 @@ export const ConfigForm = () => {
                 Полное описание всех параметров конфигурации
               </CardDescription>
             </CardHeader>
-            <CardContent className="h-[calc(100%-5rem)]">
-              <ScrollArea className="h-full">
-                <div className="space-y-6 pr-4">
-                  {Object.entries(allFieldsForReference).map(([groupKey, fields]) => (
-                    <div key={groupKey} className="space-y-3">
-                      <h3 className="font-semibold text-sm text-primary border-b pb-1">
-                        {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}
-                      </h3>
-                      <div className="space-y-3">
-                        {fields.map((field) => (
-                          <div key={field.key} className="space-y-1 text-xs">
-                            <div className="font-medium text-foreground">
-                              {field.label}
-                            </div>
-                            <div className="text-muted-foreground leading-relaxed">
-                              {field.description}
-                            </div>
-                            <div className="font-mono text-primary font-semibold">
-                              {field.key}
-                            </div>
+            <CardContent>
+              <div className="space-y-6">
+                {Object.entries(allFieldsForReference).map(([groupKey, fields]) => (
+                  <div key={groupKey} className="space-y-3">
+                    <h3 className="font-semibold text-sm text-primary border-b pb-1">
+                      {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}
+                    </h3>
+                    <div className="space-y-3">
+                      {fields.map((field) => (
+                        <div key={field.key} className="space-y-1 text-xs">
+                          <div className="font-medium text-foreground">
+                            {field.label}
                           </div>
-                        ))}
-                      </div>
+                          <div className="text-muted-foreground leading-relaxed">
+                            {field.description}
+                          </div>
+                          <div className="font-mono text-primary font-semibold">
+                            {field.key}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </ScrollArea>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
