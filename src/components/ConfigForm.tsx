@@ -300,6 +300,47 @@ export const ConfigForm = () => {
                         <option value="errors_only">errors_only</option>
                         <option value="disabled">disabled</option>
                       </select>
+                    ) : field.key === 'LOG_FILE_ENCODING' ? (
+                      <select
+                        id={field.key}
+                        value={formData[field.key]}
+                        onChange={(e) => handleInputChange(field.key, e.target.value)}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      >
+                        <optgroup label="Unicode">
+                          <option value="utf-8">UTF-8 (универсальная)</option>
+                          <option value="utf-16">UTF-16</option>
+                          <option value="utf-16le">UTF-16 LE</option>
+                          <option value="utf-16be">UTF-16 BE</option>
+                          <option value="utf-32">UTF-32</option>
+                        </optgroup>
+                        <optgroup label="Кириллица">
+                          <option value="windows-1251">Windows-1251 (CP1251)</option>
+                          <option value="koi8-r">KOI8-R</option>
+                          <option value="koi8-u">KOI8-U</option>
+                          <option value="cp866">CP866 (DOS)</option>
+                          <option value="iso-8859-5">ISO-8859-5</option>
+                        </optgroup>
+                        <optgroup label="Западноевропейские">
+                          <option value="windows-1252">Windows-1252 (CP1252)</option>
+                          <option value="iso-8859-1">ISO-8859-1 (Latin-1)</option>
+                          <option value="iso-8859-15">ISO-8859-15 (Latin-9)</option>
+                        </optgroup>
+                        <optgroup label="Азиатские">
+                          <option value="gb2312">GB2312 (китайская упрощенная)</option>
+                          <option value="gbk">GBK (китайская расширенная)</option>
+                          <option value="big5">Big5 (китайская традиционная)</option>
+                          <option value="shift_jis">Shift JIS (японская)</option>
+                          <option value="euc-jp">EUC-JP (японская)</option>
+                          <option value="euc-kr">EUC-KR (корейская)</option>
+                        </optgroup>
+                        <optgroup label="Прочие">
+                          <option value="ascii">ASCII</option>
+                          <option value="latin1">Latin-1</option>
+                          <option value="cp437">CP437</option>
+                          <option value="iso-8859-2">ISO-8859-2 (центральноевропейская)</option>
+                        </optgroup>
+                      </select>
                     ) : field.key === 'TIMEZONE_REGION' ? (
                       <select
                         id={field.key}
