@@ -436,8 +436,8 @@ export const ConfigForm = () => {
 
         {/* Правая колонка - справочник по настройкам */}
         <div className="lg:col-span-1">
-          <Card className="sticky top-6 max-h-[calc(100vh-3rem)]">
-            <CardHeader className="flex-shrink-0">
+          <Card className="sticky top-6 h-[calc(100vh-3rem)]">
+            <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
                 Справочник настроек
@@ -446,8 +446,8 @@ export const ConfigForm = () => {
                 Полное описание всех параметров конфигурации
               </CardDescription>
             </CardHeader>
-            <CardContent className="overflow-hidden flex-1">
-              <ScrollArea className="h-[calc(100vh-16rem)]">
+            <CardContent className="h-[calc(100%-5rem)]">
+              <ScrollArea className="h-full">
                 <div className="space-y-6 pr-4">
                   {Object.entries(allFieldsForReference).map(([groupKey, fields]) => (
                     <div key={groupKey} className="space-y-3">
