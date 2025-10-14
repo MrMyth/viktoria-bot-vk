@@ -19,8 +19,8 @@ interface ConfigField {
 
 // Дополнительные поля только для справочника (не редактируются в форме)
 const READONLY_FIELDS: ConfigField[] = [
-  { key: 'DISCORD_BOT_TOKEN', label: 'Токен Discord бота', description: 'Секретный токен для авторизации Discord бота. Получите его в Discord Developer Portal', defaultValue: '', type: 'text', group: 'tokens' },
-  { key: 'VK_TOKEN', label: 'Токен VK API', description: 'Токен доступа для работы с VK API. Получите его в настройках VK приложения', defaultValue: '', type: 'text', group: 'tokens' },
+  { key: 'DISCORD_BOT_TOKEN', label: 'Токен Discord бота', description: 'Секретный токен для авторизации Discord бота. Получите его в Discord Developer Portal', defaultValue: 'Token', type: 'text', group: 'tokens' },
+  { key: 'VK_TOKEN', label: 'Токен VK API', description: 'Токен доступа для работы с VK API. Получите его в настройках VK приложения', defaultValue: 'Token2', type: 'text', group: 'tokens' },
   { key: 'INTENTS_MEMBERS', label: 'Intent: Members', description: 'Разрешить боту получать информацию о участниках сервера', defaultValue: 'true', type: 'boolean', group: 'discord' },
   { key: 'INTENTS_MESSAGE_CONTENT', label: 'Intent: Message Content', description: 'Разрешить боту читать содержимое сообщений', defaultValue: 'true', type: 'boolean', group: 'discord' },
   { key: 'INTENTS_PRESENCES', label: 'Intent: Presences', description: 'Разрешить боту видеть статусы активности пользователей', defaultValue: 'true', type: 'boolean', group: 'discord' },
