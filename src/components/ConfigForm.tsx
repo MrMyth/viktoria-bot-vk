@@ -4,9 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Users, BookOpen } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { z } from 'zod';
+import { MessageCircle, Users } from 'lucide-react';
+
 
 interface ConfigField {
   key: string;
@@ -17,15 +16,6 @@ interface ConfigField {
   group: string;
 }
 
-// Дополнительные поля только для справочника (не редактируются в форме)
-const READONLY_FIELDS: ConfigField[] = [
-  { key: 'DISCORD_BOT_TOKEN', label: 'Токен Discord бота', description: 'Секретный токен для авторизации Discord бота. Получите его в Discord Developer Portal', defaultValue: 'Token', type: 'text', group: 'tokens' },
-  { key: 'VK_TOKEN', label: 'Токен VK API', description: 'Токен доступа для работы с VK API. Получите его в настройках VK приложения', defaultValue: 'Token2', type: 'text', group: 'tokens' },
-  { key: 'INTENTS_MEMBERS', label: 'Intent: Members', description: 'Разрешить боту получать информацию о участниках сервера', defaultValue: 'true', type: 'boolean', group: 'discord' },
-  { key: 'INTENTS_MESSAGE_CONTENT', label: 'Intent: Message Content', description: 'Разрешить боту читать содержимое сообщений', defaultValue: 'true', type: 'boolean', group: 'discord' },
-  { key: 'INTENTS_PRESENCES', label: 'Intent: Presences', description: 'Разрешить боту видеть статусы активности пользователей', defaultValue: 'true', type: 'boolean', group: 'discord' },
-  { key: 'INTENTS_VOICE_STATES', label: 'Intent: Voice States', description: 'Разрешить боту отслеживать голосовые каналы', defaultValue: 'true', type: 'boolean', group: 'discord' },
-];
 
 const CONFIG_FIELDS: ConfigField[] = [
   // Файлы и папки - отсортировано по алфавиту
@@ -205,14 +195,6 @@ export const ConfigForm = () => {
     return acc;
   }, {} as Record<string, ConfigField[]>);
 
-  // Объединяем все поля для справочника (редактируемые + readonly)
-  const allFieldsForReference = [...READONLY_FIELDS, ...CONFIG_FIELDS].reduce((acc, field) => {
-    if (!acc[field.group]) {
-      acc[field.group] = [];
-    }
-    acc[field.group].push(field);
-    return acc;
-  }, {} as Record<string, ConfigField[]>);
 
   return (
     <div className="container mx-auto p-6">
@@ -261,9 +243,8 @@ export const ConfigForm = () => {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Левая колонка - форма настроек */}
-        <div className="lg:col-span-2 space-y-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="space-y-6">
         {Object.entries(groupedFields).map(([groupKey, fields]) => (
           <Card key={groupKey}>
             <CardHeader>
@@ -279,6 +260,9 @@ export const ConfigForm = () => {
                     <Label htmlFor={field.key} className="text-sm font-medium">
                       {field.label}
                     </Label>
+                    <p className="text-xs font-mono text-primary font-semibold">
+                      {field.key}
+                    </p>
                     {field.type === 'boolean' ? (
                       <select
                         id={field.key}
@@ -510,47 +494,6 @@ export const ConfigForm = () => {
             Скачать готовый файл конфигурации
           </Button>
         </div>
-        </div>
-
-        {/* Правая колонка - справочник по настройкам */}
-        <div className="lg:col-span-1">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5" />
-                Справочник настроек
-              </CardTitle>
-              <CardDescription>
-                Полное описание всех параметров конфигурации
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {Object.entries(allFieldsForReference).map(([groupKey, fields]) => (
-                  <div key={groupKey} className="space-y-3">
-                    <h3 className="font-semibold text-sm text-primary border-b pb-1">
-                      {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}
-                    </h3>
-                    <div className="space-y-3">
-                      {fields.map((field) => (
-                        <div key={field.key} className="space-y-1 text-xs">
-                          <div className="font-medium text-foreground">
-                            {field.label}
-                          </div>
-                          <div className="text-muted-foreground leading-relaxed">
-                            {field.description}
-                          </div>
-                          <div className="font-mono text-primary font-semibold">
-                            {field.key}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
