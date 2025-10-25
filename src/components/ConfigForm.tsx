@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Users } from 'lucide-react';
+import { MessageCircle, Users, FolderOpen, Key, Bug, Zap, Settings } from 'lucide-react';
 
 
 interface ConfigField {
@@ -71,6 +71,15 @@ const GROUP_NAMES = {
   features: 'Функциональность',
   discord: 'Настройки Discord',
   misc: 'Прочие настройки'
+};
+
+const GROUP_ICONS = {
+  files: FolderOpen,
+  tokens: Key,
+  debug: Bug,
+  features: Zap,
+  discord: MessageCircle,
+  misc: Settings
 };
 
 export const ConfigForm = () => {
@@ -245,10 +254,15 @@ export const ConfigForm = () => {
 
       <div className="max-w-6xl mx-auto">
         <div className="space-y-6">
-        {Object.entries(groupedFields).map(([groupKey, fields]) => (
+        {Object.entries(groupedFields).map(([groupKey, fields]) => {
+          const IconComponent = GROUP_ICONS[groupKey as keyof typeof GROUP_ICONS];
+          return (
           <Card key={groupKey}>
             <CardHeader>
-              <CardTitle className="text-xl border-b-4 border-red-600 pb-2 inline-block">{GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}</CardTitle>
+              <CardTitle className="text-xl border-b-4 border-red-600 pb-2 inline-block flex items-center gap-2">
+                <IconComponent className="w-5 h-5" />
+                {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES]}
+              </CardTitle>
               <CardDescription>
                 Настройки для {GROUP_NAMES[groupKey as keyof typeof GROUP_NAMES].toLowerCase()}
               </CardDescription>
@@ -487,7 +501,8 @@ export const ConfigForm = () => {
               </div>
             </CardContent>
           </Card>
-        ))}
+        );
+        })}
         
         <div className="text-center pt-8">
           <Button onClick={generateConfigFile} variant="download" size="lg">
