@@ -196,7 +196,8 @@ export const ConfigForm = () => {
       })
     ];
     
-    const configContent = allConfigEntries.join('\n');
+    // Используем CRLF для Windows
+    const configContent = allConfigEntries.join('\r\n');
 
     const blob = new Blob([configContent], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
