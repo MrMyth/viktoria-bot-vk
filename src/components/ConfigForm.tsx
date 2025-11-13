@@ -3,8 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Users, FolderOpen, Key, Bug, Zap, Settings } from 'lucide-react';
+import { MessageCircle, Users, FolderOpen, Key, Bug, Zap, Settings, Info } from 'lucide-react';
 
 
 interface ConfigField {
@@ -285,6 +286,14 @@ export const ConfigForm = () => {
       </div>
 
       <div className="max-w-6xl mx-auto">
+        <Alert className="mb-6 border-primary/20 bg-primary/5">
+          <Info className="h-4 w-4" />
+          <AlertDescription className="text-sm">
+            Токены Discord, Telegram и VK добавляются редактированием файла после скачивания. 
+            Это решение автора бота. Данные формы никуда не передаются.
+          </AlertDescription>
+        </Alert>
+        
         <div className="space-y-6">
         {Object.entries(groupedFields).map(([groupKey, fields]) => {
           const IconComponent = GROUP_ICONS[groupKey as keyof typeof GROUP_ICONS];
