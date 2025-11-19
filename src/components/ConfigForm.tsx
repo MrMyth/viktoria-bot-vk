@@ -161,6 +161,9 @@ export const ConfigForm = () => {
   };
 
   const generateConfigFile = () => {
+    // Токены, которые не отображаются в форме
+    const hiddenTokens = ['DISCORD_BOT_TOKEN', 'TELEGRAM_BOT_TOKEN', 'VK_TOKEN'];
+    
     // Функция для добавления расширений к файлам
     const addFileExtension = (key: string, value: string) => {
       const fileExtensions: Record<string, string> = {
@@ -180,21 +183,24 @@ export const ConfigForm = () => {
     
     // Создаем массив всех параметров конфигурации
     const allConfigEntries = [
-      // Добавляем токены с пустыми значениями
+      // Добавляем токены с пустыми значениями (не отображаются в форме)
       'DISCORD_BOT_TOKEN=""',
+      'TELEGRAM_BOT_TOKEN=""',
       'VK_TOKEN=""',
       // Добавляем Discord intents с фиксированными значениями true
       'INTENTS_MEMBERS="true"',
       'INTENTS_MESSAGE_CONTENT="true"',
       'INTENTS_PRESENCES="true"',
       'INTENTS_VOICE_STATES="true"',
-      // Добавляем остальные поля
-      ...CONFIG_FIELDS.map(field => {
-        const value = field.group === 'files' 
-          ? addFileExtension(field.key, formData[field.key])
-          : formData[field.key];
-        return `${field.key}="${value}"`;
-      })
+      // Добавляем остальные поля (исключая токены)
+      ...CONFIG_FIELDS
+        .filter(field => !hiddenTokens.includes(field.key))
+        .map(field => {
+          const value = field.group === 'files' 
+            ? addFileExtension(field.key, formData[field.key])
+            : formData[field.key];
+          return `${field.key}="${value}"`;
+        })
     ];
     
     // Используем CRLF для Windows
@@ -229,13 +235,18 @@ export const ConfigForm = () => {
     });
   };
 
-  const groupedFields = CONFIG_FIELDS.reduce((acc, field) => {
-    if (!acc[field.group]) {
-      acc[field.group] = [];
-    }
-    acc[field.group].push(field);
-    return acc;
-  }, {} as Record<string, ConfigField[]>);
+  // Токены, которые не отображаются в форме
+  const hiddenTokens = ['DISCORD_BOT_TOKEN', 'TELEGRAM_BOT_TOKEN', 'VK_TOKEN'];
+  
+  const groupedFields = CONFIG_FIELDS
+    .filter(field => !hiddenTokens.includes(field.key))
+    .reduce((acc, field) => {
+      if (!acc[field.group]) {
+        acc[field.group] = [];
+      }
+      acc[field.group].push(field);
+      return acc;
+    }, {} as Record<string, ConfigField[]>);
 
 
   return (
