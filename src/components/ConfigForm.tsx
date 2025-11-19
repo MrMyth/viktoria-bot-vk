@@ -46,7 +46,7 @@ const CONFIG_FIELDS: ConfigField[] = [
   { key: 'STARTER_ROLE_ID', label: 'ID начальной роли', description: 'ID роли для новых пользователей', defaultValue: '1183737126769143909', type: 'text', group: 'tokens' },
   { key: 'TELEGRAM_BOT_TOKEN', label: 'Токен бота Telegram', description: 'Токен для авторизации Telegram бота', defaultValue: '', type: 'text', group: 'tokens' },
   { key: 'TELEGRAM_CHANNEL_ID', label: 'ID канала Telegram', description: 'ID канала Telegram для мониторинга', defaultValue: '@FromRussiaDiv2', type: 'text', group: 'tokens' },
-  { key: 'TELEGRAM_EXCLUDED_VOICE_CHANNELS', label: 'Исключенные голосовые каналы Telegram', description: 'Список ID голосовых каналов, которые нужно игнорировать (через запятую)', defaultValue: '1111694334182563901,1064867508647116881,1275714782267183114', type: 'text', group: 'tokens' },
+  { key: 'TELEGRAM_EXCLUDED_VOICE_CHANNELS', label: 'Исключенные голосовые каналы Discord', description: 'Список ID голосовых каналов, которые нужно игнорировать (через запятую)', defaultValue: '1111694334182563901,1064867508647116881,1275714782267183114', type: 'text', group: 'tokens' },
   { key: 'TELEGRAM_THREAD_ID', label: 'ID треда Telegram', description: 'ID треда в канале Telegram', defaultValue: '183', type: 'text', group: 'tokens' },
   { key: 'VK_TOKEN', label: 'Токен VK', description: 'Токен для API ВКонтакте', defaultValue: '', type: 'text', group: 'tokens' },
 
