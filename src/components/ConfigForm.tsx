@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Users, FolderOpen, Key, Bug, Zap, Settings, Info } from 'lucide-react';
+import { ToggleLeft, Clock, Shield, Hash, Calculator, FileText, Info } from 'lucide-react';
 
 
 interface ConfigField {
@@ -19,27 +19,62 @@ interface ConfigField {
 
 
 const CONFIG_FIELDS: ConfigField[] = [
-  // Файлы и папки - отсортировано по алфавиту
-  { key: 'CACHE_FILE_NAME', label: 'Кэш групп', description: 'Файл для кэширования данных ВК групп', defaultValue: 'vk_group_cache.json', type: 'text', group: 'files' },
-  { key: 'CHANNEL_PROTECTION_LIST_FILE_NAME', label: 'Защищенные каналы', description: 'Список защищенных каналов', defaultValue: 'protected_channels.json', type: 'text', group: 'files' },
-  { key: 'DATA_FOLDER', label: 'Папка данных', description: 'Основная папка для хранения данных', defaultValue: 'data', type: 'text', group: 'files' },
-  { key: 'DATABASE_FILE_NAME', label: 'База данных постов', description: 'База данных обработанных постов', defaultValue: 'processed_posts.db', type: 'text', group: 'files' },
-  { key: 'LIVE_CACHE_FILE_NAME', label: 'Кэш стримов', description: 'Кэш для данных о прямых трансляциях', defaultValue: 'vk_Live_cache.json', type: 'text', group: 'files' },
-  { key: 'LIVE_DATABASE_FILE_NAME', label: 'База данных стримов', description: 'База данных для отслеживания стримов', defaultValue: 'vk_live.db', type: 'text', group: 'files' },
-  { key: 'LOG_FILE_NAME', label: 'Файл логов', description: 'Файл для записи логов работы бота', defaultValue: 'bot.log', type: 'text', group: 'files' },
-  { key: 'PDF_CACHE_FILE_NAME', label: 'Кэш PDF', description: 'Файл для кэширования данных PDF', defaultValue: 'pdf_cache.json', type: 'text', group: 'files' },
-  { key: 'TELEGRAM_CACHE_FILE_NAME', label: 'Кэш Telegram', description: 'Файл для кэширования данных Telegram', defaultValue: 'telegram_cache.json', type: 'text', group: 'files' },
-  { key: 'TRELLO_CACHE_FILE_NAME', label: 'Кэш Trello', description: 'Файл для кэширования данных Trello', defaultValue: 'trello_cache.json', type: 'text', group: 'files' },
-  { key: 'VOICE_CHANNEL_FILE_NAME', label: 'Защищенные голосовые каналы', description: 'Список защищенных голосовых каналов', defaultValue: 'protected_channels_voice.json', type: 'text', group: 'files' },
+  // Группа 1: Параметры истина/ложь
+  { key: 'DEBUG', label: 'Режим отладки', description: 'Включить подробное логирование', defaultValue: 'false', type: 'boolean', group: 'boolean' },
+  { key: 'DELETE_LINKS', label: 'Удалять ссылки', description: 'Автоматически удалять сообщения со ссылками', defaultValue: 'false', type: 'boolean', group: 'boolean' },
+  { key: 'DISABLE_EMOJI_CONSOLE', label: 'Отключить эмодзи в консоли', description: 'Убрать эмодзи из вывода в консоль', defaultValue: 'false', type: 'boolean', group: 'boolean' },
+  { key: 'DISABLE_EMOJI_DISCORD', label: 'Отключить эмодзи в Discord', description: 'Убрать эмодзи из сообщений Discord', defaultValue: 'false', type: 'boolean', group: 'boolean' },
+  { key: 'DISABLE_EMOJI_FILE', label: 'Отключить эмодзи в файлах', description: 'Убрать эмодзи при записи в файлы', defaultValue: 'true', type: 'boolean', group: 'boolean' },
+  { key: 'DISABLE_KEYBOARD_INTERRUPT', label: 'Отключить прерывание с клавиатуры', description: 'Игнорировать Ctrl+C и подобные команды', defaultValue: 'true', type: 'boolean', group: 'boolean' },
+  { key: 'DISABLE_LOGGER', label: 'Отключить логгер', description: 'Полностью отключить систему логирования', defaultValue: 'false', type: 'boolean', group: 'boolean' },
+  { key: 'DO_REACTIONS', label: 'Добавлять реакции', description: 'Автоматически добавлять реакции на сообщения', defaultValue: 'false', type: 'boolean', group: 'boolean' },
+  { key: 'ENABLE_ATTACHMENT_CHECK', label: 'Проверка вложений', description: 'Включить проверку вложений в сообщениях', defaultValue: 'true', type: 'boolean', group: 'boolean' },
+  { key: 'ENABLE_GLOBAL_LOG', label: 'Глобальное логирование', description: 'Включить отправку логов в глобальный канал', defaultValue: 'true', type: 'boolean', group: 'boolean' },
+  { key: 'ENABLE_VIDEO_CHECK', label: 'Проверка видео', description: 'Включить проверку видео в сообщениях', defaultValue: 'true', type: 'boolean', group: 'boolean' },
 
-  // ID каналов и ролей - отсортировано по алфавиту
-  { key: 'BAN_ROLE_ID', label: 'ID роли бана', description: 'ID роли для забаненных пользователей', defaultValue: '1428698132438319205', type: 'text', group: 'tokens' },
-  { key: 'DISCORD_BOT_TOKEN', label: 'Токен бота Discord', description: 'Токен для авторизации Discord бота', defaultValue: '', type: 'text', group: 'tokens' },
-  { key: 'DISCORD_SOURCE_CHANNEL_ID', label: 'ID исходного канала Discord', description: 'Discord канал для мониторинга', defaultValue: '1314901028209954867', type: 'text', group: 'tokens' },
-  { key: 'EXTRA_IGNORE_ROLE_ID', label: 'ID роли игнорирования', description: 'ID роли для игнорирования в дополнительном модуле', defaultValue: '1425073025119944804', type: 'text', group: 'tokens' },
-  { key: 'EXTRA_STATUS_CHANNEL_ID', label: 'ID канала дополнительного статуса', description: 'Discord канал для дополнительных уведомлений', defaultValue: '1425045963348770856', type: 'text', group: 'tokens' },
-  { key: 'GLOBAL_LOG_CHANNEL_ID', label: 'ID канала глобальных логов', description: 'Discord канал для записи всех логов', defaultValue: '1403729214255140955', type: 'text', group: 'tokens' },
-  { key: 'PDF_CHANNEL_ID', label: 'ID канала PDF', description: 'Discord канал для уведомлений о PDF', defaultValue: '1426974340829937664', type: 'text', group: 'tokens' },
+  // Группа 2: Таймеры и часовой пояс
+  { key: 'TELEGRAM_DELAY', label: 'Задержка Telegram (сек)', description: 'Задержка между проверками Telegram', defaultValue: '60', type: 'number', group: 'timers' },
+  { key: 'TIMEZONE', label: 'Часовой пояс', description: 'Часовой пояс для временных меток', defaultValue: 'Europe/Moscow', type: 'text', group: 'timers' },
+  { key: 'TRELLO_CHECK_INTERVAL', label: 'Интервал проверки Trello (сек)', description: 'Интервал проверки обновлений в Trello', defaultValue: '120', type: 'number', group: 'timers' },
+  { key: 'VK_DELAY', label: 'Задержка VK (сек)', description: 'Задержка между проверками VK', defaultValue: '60', type: 'number', group: 'timers' },
+  { key: 'VK_LIVE_DELAY', label: 'Задержка VK стримов (сек)', description: 'Задержка между проверками прямых трансляций VK', defaultValue: '300', type: 'number', group: 'timers' },
+  { key: 'VOICE_STAT_INTERVAL', label: 'Интервал статистики голоса (мин)', description: 'Интервал записи статистики голосовых каналов', defaultValue: '5', type: 'number', group: 'timers' },
+
+  // Группа 3: Роли
+  { key: 'BAN_ROLE_ID', label: 'ID роли бана', description: 'ID роли для забаненных пользователей', defaultValue: '1428698132438319205', type: 'text', group: 'roles' },
+  { key: 'EXTRA_IGNORE_ROLE_ID', label: 'ID роли игнорирования', description: 'ID роли для игнорирования в дополнительном модуле', defaultValue: '1425073025119944804', type: 'text', group: 'roles' },
+  { key: 'PDF_MENTION_ROLE_ID', label: 'ID роли упоминания PDF', description: 'ID роли для упоминания при обновлениях PDF', defaultValue: '1148137082867429456', type: 'text', group: 'roles' },
+  { key: 'RESTORE_ROLE_ID', label: 'ID роли куратора', description: 'ID роли для восстановления доступа', defaultValue: '1412061713217359916', type: 'text', group: 'roles' },
+  { key: 'STARTER_ROLE_ID', label: 'ID начальной роли', description: 'ID роли для новых пользователей', defaultValue: '1183737126769143909', type: 'text', group: 'roles' },
+
+  // Группа 4: Каналы
+  { key: 'DISCORD_SOURCE_CHANNEL_ID', label: 'ID исходного канала Discord', description: 'Discord канал для мониторинга', defaultValue: '1314901028209954867', type: 'text', group: 'channels' },
+  { key: 'EXTRA_STATUS_CHANNEL_ID', label: 'ID канала дополнительного статуса', description: 'Discord канал для дополнительных уведомлений', defaultValue: '1425045963348770856', type: 'text', group: 'channels' },
+  { key: 'GLOBAL_LOG_CHANNEL_ID', label: 'ID канала глобальных логов', description: 'Discord канал для записи всех логов', defaultValue: '1403729214255140955', type: 'text', group: 'channels' },
+  { key: 'PDF_CHANNEL_ID', label: 'ID канала PDF', description: 'Discord канал для уведомлений о PDF', defaultValue: '1426974340829937664', type: 'text', group: 'channels' },
+  { key: 'TELEGRAM_CHANNEL_ID', label: 'ID канала Telegram', description: 'ID канала Telegram для мониторинга', defaultValue: '@FromRussiaDiv2', type: 'text', group: 'channels' },
+  { key: 'TELEGRAM_EXCLUDED_VOICE_CHANNELS', label: 'Исключенные голосовые каналы Discord', description: 'Список ID голосовых каналов, которые нужно игнорировать (через запятую)', defaultValue: '1111694334182563901,1064867508647116881,1275714782267183114', type: 'text', group: 'channels' },
+
+  // Группа 5: Числовые параметры
+  { key: 'MAX_RECONNECT_ATTEMPTS', label: 'Максимум попыток переподключения', description: 'Максимальное количество попыток переподключения', defaultValue: '5', type: 'number', group: 'numbers' },
+  { key: 'MIN_MESSAGE_LENGTH', label: 'Минимальная длина сообщения', description: 'Минимальное количество символов в сообщении', defaultValue: '10', type: 'number', group: 'numbers' },
+  { key: 'TELEGRAM_THREAD_ID', label: 'ID треда Telegram', description: 'ID треда в канале Telegram', defaultValue: '183', type: 'text', group: 'numbers' },
+  { key: 'VK_GROUP_COUNT', label: 'Количество VK групп', description: 'Количество групп VK для мониторинга', defaultValue: '50', type: 'number', group: 'numbers' },
+
+  // Группа 6: Текстовые параметры
+  { key: 'CACHE_FILE_NAME', label: 'Кэш групп', description: 'Файл для кэширования данных ВК групп', defaultValue: 'vk_group_cache.json', type: 'text', group: 'text' },
+  { key: 'CHANNEL_PROTECTION_LIST_FILE_NAME', label: 'Защищенные каналы', description: 'Список защищенных каналов', defaultValue: 'protected_channels.json', type: 'text', group: 'text' },
+  { key: 'DATA_FOLDER', label: 'Папка данных', description: 'Основная папка для хранения данных', defaultValue: 'data', type: 'text', group: 'text' },
+  { key: 'DATABASE_FILE_NAME', label: 'База данных постов', description: 'База данных обработанных постов', defaultValue: 'processed_posts.db', type: 'text', group: 'text' },
+  { key: 'LIVE_CACHE_FILE_NAME', label: 'Кэш стримов', description: 'Кэш для данных о прямых трансляциях', defaultValue: 'vk_Live_cache.json', type: 'text', group: 'text' },
+  { key: 'LIVE_DATABASE_FILE_NAME', label: 'База данных стримов', description: 'База данных для отслеживания стримов', defaultValue: 'vk_live.db', type: 'text', group: 'text' },
+  { key: 'LOG_FILE_NAME', label: 'Файл логов', description: 'Файл для записи логов работы бота', defaultValue: 'bot.log', type: 'text', group: 'text' },
+  { key: 'PDF_CACHE_FILE_NAME', label: 'Кэш PDF', description: 'Файл для кэширования данных PDF', defaultValue: 'pdf_cache.json', type: 'text', group: 'text' },
+  { key: 'SERVER_ID', label: 'ID сервера Discord', description: 'Идентификатор Discord сервера', defaultValue: '835802952521351180', type: 'text', group: 'text' },
+  { key: 'TELEGRAM_CACHE_FILE_NAME', label: 'Кэш Telegram', description: 'Файл для кэширования данных Telegram', defaultValue: 'telegram_cache.json', type: 'text', group: 'text' },
+  { key: 'TRELLO_CACHE_FILE_NAME', label: 'Кэш Trello', description: 'Файл для кэширования данных Trello', defaultValue: 'trello_cache.json', type: 'text', group: 'text' },
+  { key: 'VOICE_CHANNEL_FILE_NAME', label: 'Защищенные голосовые каналы', description: 'Список защищенных голосовых каналов', defaultValue: 'protected_channels_voice.json', type: 'text', group: 'text' },
+];
   { key: 'PDF_MENTION_ROLE_ID', label: 'ID роли упоминания PDF', description: 'ID роли для упоминания при обновлениях PDF', defaultValue: '1148137082867429456', type: 'text', group: 'tokens' },
   { key: 'RESTORE_ROLE_ID', label: 'ID роли куратора', description: 'ID роли для восстановления доступа', defaultValue: '1412061713217359916', type: 'text', group: 'tokens' },
   { key: 'SERVER_ID', label: 'ID сервера Discord', description: 'Идентификатор Discord сервера', defaultValue: '835802952521351180', type: 'text', group: 'tokens' },
