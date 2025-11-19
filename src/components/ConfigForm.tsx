@@ -300,7 +300,7 @@ export const ConfigForm = () => {
         <Alert className="mb-6 border-primary/20 bg-primary/5">
           <Info className="h-4 w-4" />
           <AlertDescription className="text-sm">
-            Токены Discord, Telegram и VK добавляются редактированием файла после скачивания. 
+            Параметры <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">DISCORD_BOT_TOKEN</code>, <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">TELEGRAM_BOT_TOKEN</code> и <code className="font-mono text-xs bg-muted px-1 py-0.5 rounded">VK_TOKEN</code> добавляются редактированием файла после скачивания. 
             Это решение автора бота. Данные формы никуда не передаются.
           </AlertDescription>
         </Alert>
